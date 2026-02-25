@@ -179,14 +179,22 @@
             }
         }
 
-        let last = 0;
-        function loop(t) {
-            if (t - last > 120) {
+        const STEP = MobileOption.waveDelay;
+        let acc = 0;
+        let last = performance.now();
+
+        function loop(now) {
+            acc += now - last;
+            last = now;
+
+            while (acc >= STEP) {
                 stepWave();
-                last = t;
+                acc -= STEP;
             }
+
             requestAnimationFrame(loop);
         }
+
         requestAnimationFrame(loop);
 
         const ANSWER = "19032009";
@@ -235,3 +243,4 @@
 </body>
 
 </html>
+
