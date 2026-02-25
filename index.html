@@ -159,6 +159,8 @@
         let toB = true;
 
         function stepWave() {
+            letters.forEach(l => l.style.color = AtoB[0]);
+
             const forward  = toB ? AtoB : BtoA;
             const backward = toB ? BtoA : AtoB;
 
@@ -170,11 +172,8 @@
                 if (letters[back])  letters[back].style.color  = backward[i];
             }
 
-            const tail = index - forward.length - 2;
-            if (letters[tail]) letters[tail].style.color = forward[0];
-
             index++;
-            if (index > letters.length) {
+            if (index >= letters.length + forward.length) {
                 index = 0;
                 toB = !toB;
             }
@@ -234,4 +233,5 @@
         }
     </script>
 </body>
+
 </html>
