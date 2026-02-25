@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>varr</title>
+    <script src="https://kit.fontawesome.com/a001804068.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="wall"></div>
+    <div id="overlay"></div>
+    <div id="heartui"></div>
+    <input type="checkbox" id="toggle">
+    <label for="toggle" id="heart">
+        <div id="content" class="content">
+            <div id="incontent" >
+                <div id="ttle">NHAP MAT KHAU</div>
+                <input type="text" id="pass" placeholder="nhap mat khau">
+                <button id="butt">ENTER</button>
+            </div>
+
+            <button id="back" hidden><i class="fa-solid fa-rotate-left"></i></button>
+            <div id="yes" hidden>dung</div>
+            <div id="no" hidden>sai</div>
+        </div>
+    </label>
+    <script>
+        const MobileOption = (() => {
+        const isMobile = window.innerWidth < 768;
+
+        const config = {
+            enabled: true,
+
+            desktop: {
+            maxA: 90,
+            waveDelay: 120,
+            scale: 1,
+            },
+
+            mobile: {
+            maxA: 40,
+            waveDelay: 160,
+            scale: 0.85,
+            }
+        };
+
+        const mode = (config.enabled && isMobile)
+            ? config.mobile
+            : config.desktop;
+
+        return {
+            isMobile,
+            maxA: mode.maxA,
+            waveDelay: mode.waveDelay,
+            scale: mode.scale,
+
+            applyStyle() {
+            document.documentElement.style.setProperty(
+                "--A-scale",
+                mode.scale
+            );
+            },
+
+            bindResize() {
+            let lastMode = this.isMobile;
+
+            window.addEventListener("resize", () => {
+                const nowMobile = window.innerWidth < 768;
+
+                if (nowMobile !== lastMode) {
+                location.reload();
+                }
+
+                lastMode = nowMobile;
+            });
+            }
+        };
+        })();
+
+        MobileOption.applyStyle();
+        MobileOption.bindResize();
+
+        const wall = document.getElementById("wall");
+        const word = ["I","L","O","V","E","Y","O","U"];
+
+        const AWidth  = 40;
+        const AHeight = 150;
+
+        const cols = Math.floor(window.innerWidth  / AWidth);
+        const rows = Math.floor(window.innerHeight / AHeight);
+
+
+        const cells = [];
+        for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+            cells.push({ r, c });
+        }
+        }
+
+
+        cells.sort(() => Math.random() - 0.5);
+
+
+        const count = Math.min(cells.length, MobileOption.maxA);
+
+        for (let i = 0; i < count; i++) {
+        const { r, c } = cells[i];
+
+        const A = document.createElement("div");
+        A.className = "A";
+
+        const jitterX = (Math.random() - 0.5) * 8;
+        const jitterY = (Math.random() - 0.5) * 8;
+
+        A.style.left = (c + Math.random()) * AWidth  + "px";
+        A.style.top  = (r + Math.random()) * AHeight + "px";
+
+        for (let ch of word) {
+            const span = document.createElement("span");
+            span.textContent = ch;
+            A.appendChild(span);
+        }
+
+        wall.appendChild(A);
+        }
+
+        const letters = document.querySelectorAll(".A span");
+
+        const AtoB = [
+        "#000000",
+        "#070305",
+        "#0d0609",
+        "#14090f",
+        "#1a0a12",
+        "#220d18",
+        "#2b0f1a",
+        "#331320",
+        "#402030",
+        "#4d273a",
+        "#5a2f45",
+        "#673750",
+        "#75405c",
+        "#8f4c6a",
+        "#a25b78",
+        "#b56b87",
+        "#c87c97",
+        "#dc9fb0",
+        "#f0b8c7",
+        "#f6c1d1"
+        ];
+
+        const BtoA = [...AtoB].reverse();
+
+        let index = 0;
+        let toB = true;
+
+        function stepWave() {
+            const forward  = toB ? AtoB : BtoA;
+            const backward = toB ? BtoA : AtoB;
+
+            for (let i = 0; i < forward.length; i++) {
+                const front = index - i;
+                const back  = index + i;
+
+                if (letters[front]) letters[front].style.color = forward[i];
+                if (letters[back])  letters[back].style.color  = backward[i];
+            }
+
+            const tail = index - forward.length - 2;
+            if (letters[tail]) letters[tail].style.color = forward[0];
+
+            index++;
+            if (index > letters.length) {
+                index = 0;
+                toB = !toB;
+            }
+        }
+
+        let last = 0;
+        function loop(t) {
+            if (t - last > 120) {
+                stepWave();
+                last = t;
+            }
+            requestAnimationFrame(loop);
+        }
+        requestAnimationFrame(loop);
+
+        const ANSWER = "19032009";
+
+        const butt = document.getElementById("butt");
+        const pass = document.getElementById("pass");
+        const yes = document.getElementById("yes");
+        const no = document.getElementById("no");
+        const incontent = document.getElementById("incontent");
+        const back = document.getElementById("back");
+
+        pass.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                butt.click();
+            }
+        });
+
+        butt.onclick = () => {
+            const value = pass.value.trim();
+            
+            if (value.trim() === "") {
+                yes.hidden = true;
+                no.hidden = true;
+                return;
+            }
+            if (value === ANSWER) {
+                yes.hidden = false;
+                no.hidden = true;
+                incontent.hidden = true;
+                back.hidden = false;
+            } else {
+                yes.hidden = true;
+                no.hidden = false;
+                incontent.hidden = true;
+                back.hidden = false;
+            }
+        };
+
+        back.onclick = () => {
+            yes.hidden = true;
+            no.hidden = true;
+            incontent.hidden = false;
+            back.hidden = true;
+        }
+    </script>
+</body>
+</html>

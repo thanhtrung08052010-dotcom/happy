@@ -1,0 +1,204 @@
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  overflow: hidden;
+  font-family: monospace;
+}
+
+#wall {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  inset:0;
+  z-index: 1;
+}
+
+#overlay{
+  position: fixed;
+  inset:0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.A {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 16px;
+  line-height: 1.3;
+  pointer-events: none;
+  will-change: transform, color;
+}
+
+.A span {
+  display: block;
+}
+
+.A {
+  transform: scale(var(--A-scale, 1));
+}
+
+#heart{
+  margin:auto;
+  margin-top: 200px;
+  height:100px;
+  width:100px;
+  position:fixed;
+  background-color: pink;
+  transform: rotate(-45deg);
+  border-radius: 10px;
+  transition: 0.3s;
+  transition:
+    width 0.6s ease,
+    height 0.6s ease,
+    border-radius 0.6s ease,
+    transform 0.6s ease;
+  inset: 0;
+  z-index: 3;
+  pointer-events: auto;
+  animation: bounce 2.2s infinite ease-in-out;
+}
+#heart::before,
+#heart::after{
+  content: "";
+  height: 100px;
+  width: 100px;
+  background-color: pink;
+  border-radius: 50%;
+  position: absolute;
+}
+#heart::before{
+  top:-50px;
+  left: 0;
+}
+#heart::after{
+  left: 50px;
+  top:0;
+}
+#heart:hover{
+  filter: drop-shadow(0 0 20px hsl(330, 100%, 78%));
+  cursor: pointer;
+}
+#heart,
+#heart::before,
+#heart::after{
+  background-color: pink;
+  transition: 0.3s;
+}
+#heart:hover,
+#heart:hover::before,
+#heart:hover::after{
+  background-color: hsl(350, 100%, 81%);
+}
+@keyframes bounce{
+  0% {
+    transform: rotate(-45deg) scale(1);
+    box-shadow: none;
+  }
+  50% {
+    transform: rotate(-45deg) scale(1.1);
+    filter: drop-shadow(0 0 20px hsl(330, 100%, 78%));
+  }
+  100% {
+    transform: rotate(-45deg) scale(1);
+    box-shadow: none;
+  }
+}
+
+@keyframes bounce2{
+  0% {transform: scale(1);}
+  50% {transform: scale(1.02);}
+  100% {transform: scale(1);}
+}
+
+#toggle{
+  display: none;
+}
+#toggle:checked + #heart:hover{
+  cursor: default;
+}
+#toggle:checked + #heart{
+  animation: bounce2 2.2s infinite ease-in-out;
+}
+#toggle:checked + #heart{
+  width: 285px;
+  height: 210px;
+  transform: rotate(0deg);
+  border-radius: 20px;
+}
+#toggle:checked + #heart::before,
+#toggle:checked + #heart::after{
+  opacity: 0;
+  transform: scale(0.5);
+}
+#heart .content{
+  opacity: 0;
+  transform: scale(0.95);
+  transition-duration: 0.1s;
+  transition-property: opacity, transform;
+  transition-timing-function: ease;
+  pointer-events: none;
+}
+
+#toggle:checked + #heart .content{
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+#pass{
+  margin-left: 30px;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-family: 'Open Sans';
+  color: #333;
+  border: 2px solid #ffaedd;
+  border-radius: 10px;
+  outline:none;
+  background-color: rgb(255, 148, 184);
+  transition: 0.25s;
+}
+#pass:hover{
+  background-color: pink;
+}
+#pass:focus{
+  border-color: hotpink;
+  box-shadow: 0 0 10px rgba(255,105,180,.4);
+  background-color: pink;
+}
+#butt{
+  margin-left: 115px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 10px;
+  background-color: rgb(255, 148, 184);
+  font-family: 'Open Sans';
+}
+#butt:hover{
+  background-color: pink;
+  cursor: pointer;
+}
+#ttle{
+  margin-top:30px;
+  margin-bottom: 30px;
+  margin-left: 65px;
+  font-size: 20px;
+  font-family: 'Open Sans';
+}
+#back{
+  margin-left:12px;
+  margin-top:7px;
+  border-radius: 50%;
+  border: none;
+  padding: 5px 5px;
+}
+#back:hover{
+  cursor: pointer;
+}
+.fa-solid_fa-rotate-left{
+  transform: scale(0.3);
+}
