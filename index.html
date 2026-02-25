@@ -71,10 +71,6 @@
             window.addEventListener("resize", () => {
                 const nowMobile = window.innerWidth < 768;
 
-                if (nowMobile !== lastMode) {
-                location.reload();
-                }
-
                 lastMode = nowMobile;
             });
             }
@@ -197,6 +193,12 @@
 
         requestAnimationFrame(loop);
 
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) {
+                acc = 0;
+            }
+        });
+
         const ANSWER = "19032009";
 
         const butt = document.getElementById("butt");
@@ -241,6 +243,4 @@
         }
     </script>
 </body>
-
 </html>
-
