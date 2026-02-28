@@ -128,6 +128,10 @@ html, body {
   height: 210px;
   transform: rotate(0deg);
   border-radius: 20px;
+  display: grid;
+  grid-template-rows: 1fr 1fr 2fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 0;
 }
 #toggle:checked + #heart::before,
 #toggle:checked + #heart::after{
@@ -201,4 +205,102 @@ html, body {
 }
 .fa-solid_fa-rotate-left{
   transform: scale(0.3);
+}
+
+
+.top{
+  opacity: 0;
+  height: 75px;
+  width: 310px;
+  background-color: hsl(0, 46%, 50%);
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  transform: translateX(-5px) translateY(-40px);
+  grid-row: 1;
+  transition: 0.2s ease;
+  transform-origin: top;
+  z-index: 21;
+}
+.sick{
+  opacity: 0;
+  height: 25px;
+  width: 320px;
+  transform: translateX(-10px) translateY(-40px);
+  background-color: hsl(49, 90%, 49%);
+  grid-row: 2;
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  transform-origin: left;
+  z-index: 23;
+}
+.buttt{
+  opacity: 0;
+  height: 150px;
+  width: 310px;
+  transform: translateX(-5px) translateY(-40px);
+  background-color: hsl(0, 57%, 35%);
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+  grid-row: 3;
+  transform-origin: bottom;
+  z-index: 22;
+}
+.dot{
+  opacity: 0;
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  grid-column: 1;
+  grid-row: 2;
+  transform: translate(100px, -240px);
+  z-index: 24;
+}
+.dot img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transform: translateY(-10px);
+}
+.top,
+.sick,
+.buttt,
+.dor{
+  pointer-events: none;
+}
+
+
+
+.one{
+  opacity: 1;
+  animation: poptop 0.5s ease;
+}
+.two{
+  opacity: 1;
+  animation: stretchin 0.5s ease;
+}
+.three{
+  opacity: 1;
+  animation: poptop 0.5s ease;
+}
+.four{
+  opacity: 1;
+  animation: fah 0.5s ease;
+}
+
+@keyframes poptop{
+  0% {transform: scale(0) translateX(-5px) translateY(-40px);}
+  75% {transform: scale(1.02) translateX(-5px) translateY(-40px);}
+  100% {transform: scale(1) translateX(-5px) translateY(-40px);}
+}
+@keyframes stretchin{
+  0% {transform: scale(0) translateX(-10px) translateY(-40px);}
+  75% {transform: scale(1.03) translateX(-10px) translateY(-40px);}
+  100% {transform: scale(1) translateX(-10px) translateY(-40px);}
+}
+@keyframes fah{
+  0% {transform: scale(0) translate(100px, -240px);}
+  35% {transform: scale(0) translate(100px, -240px);}
+  80% {transform: scale(1.03) translate(100px, -240px);}
+  100% {transform: scale(1) translate(100px, -240px);}
 }
