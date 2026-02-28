@@ -24,7 +24,14 @@
             </div>
 
             <button id="back" hidden><i class="fa-solid fa-rotate-left"></i></button>
-            <div id="yes" hidden>toi yeu ong khoa oi</div>
+            <div id="yes" hidden>
+                <div id="top" class="top"></div>
+                <div id="sick" class="sick"></div>
+                <div id="buttt" class="buttt"></div>
+                <div id="dot" class="dot">
+                    <img src="img/padlock.png" class="dog">
+                </div>
+            </div>
             <div id="no" hidden>sai</div>
         </div>
     </label>
@@ -199,7 +206,7 @@
             }
         });
 
-        const ANSWER = "11122010";
+        const ANSWER = "19032009";
 
         const butt = document.getElementById("butt");
         const pass = document.getElementById("pass");
@@ -227,11 +234,15 @@
                 no.hidden = true;
                 incontent.hidden = true;
                 back.hidden = false;
+
+                triggerBoxAnimation();
+                clickEvent();
             } else {
                 yes.hidden = true;
                 no.hidden = false;
                 incontent.hidden = true;
                 back.hidden = false;
+                clickEvent();
             }
         };
 
@@ -241,9 +252,29 @@
             incontent.hidden = false;
             back.hidden = true;
         }
+
+        const topp = document.getElementById("top");
+        const sick = document.getElementById("sick");
+        const buttt = document.getElementById("buttt");
+        const dot = document.getElementById("dot");
+        const heart = document.getElementById("heart");
+
+        function triggerBoxAnimation() {
+            const elements = [topp, sick, buttt, dot];
+            const classes = ["one", "two", "three", "four"];
+
+            elements.forEach((el, i) => {
+                el.classList.remove(classes[i]);
+                void el.offsetWidth;
+                el.classList.add(classes[i]);
+            });
+        }
+
+        function clickEvent() {
+            heart.classList.remove("event");
+            void heart.offsetWidth;
+            heart.classList.add("event");
+        }
     </script>
 </body>
 </html>
-
-
-
