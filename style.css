@@ -265,7 +265,7 @@ html, body {
 .top,
 .sick,
 .buttt,
-.dor{
+.dot{
   pointer-events: none;
 }
 
@@ -304,3 +304,4 @@ html, body {
   80% {transform: scale(1.03) translate(100px, -240px);}
   100% {transform: scale(1) translate(100px, -240px);}
 }
+
