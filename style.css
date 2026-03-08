@@ -1,8 +1,8 @@
 html, body {
   margin: 0;
-  width: 100%;
-  height: 100%;
-  background: black;
+  width: 100vw;
+  height: 100vh;
+  background: hsl(295, 100%, 87%);
   overflow: hidden;
   font-family: monospace;
 }
@@ -43,11 +43,11 @@ html, body {
 
 #heart{
   margin:auto;
-  margin-top: 200px;
+  margin-top: 50vh;
   height:100px;
   width:100px;
   position:fixed;
-  background-color: pink;
+  background-color: hsl(350, 100%, 78%);
   transform: rotate(-45deg);
   border-radius: 10px;
   transition: 0.3s;
@@ -61,12 +61,19 @@ html, body {
   pointer-events: auto;
   animation: bounce 2.2s infinite ease-in-out;
 }
+
+@media (max-width: 768px) {
+  #heart{
+    margin-top:25vh;
+  }
+}
+
 #heart::before,
 #heart::after{
   content: "";
   height: 100px;
   width: 100px;
-  background-color: pink;
+  background-color: hsl(350, 100%, 78%);
   border-radius: 50%;
   position: absolute;
 }
@@ -78,20 +85,16 @@ html, body {
   left: 50px;
   top:0;
 }
-#heart:hover{
-  filter: drop-shadow(0 0 20px hsl(330, 100%, 78%));
-  cursor: pointer;
-}
 #heart,
 #heart::before,
 #heart::after{
-  background-color: pink;
+  background-color: hsl(350, 100%, 78%);
   transition: 0.3s;
 }
 #heart:hover,
 #heart:hover::before,
 #heart:hover::after{
-  background-color: hsl(350, 100%, 81%);
+  background-color: hsl(350, 100%, 87%);
 }
 @keyframes bounce{
   0% {
@@ -119,6 +122,7 @@ html, body {
 }
 #toggle:checked + #heart:hover{
   cursor: default;
+  background-color: hsl(350, 100%, 86%);
 }
 #toggle:checked + #heart{
   animation: bounce2 2.2s infinite ease-in-out;
@@ -127,6 +131,7 @@ html, body {
   width: 285px;
   height: 210px;
   transform: rotate(0deg);
+  background-color: hsl(350, 100%, 87%);
   border-radius: 20px;
   display: grid;
   grid-template-rows: 1fr 1fr 2fr;
@@ -153,6 +158,7 @@ html, body {
   pointer-events: auto;
 }
 #pass{
+  color:white;
   margin-left: 30px;
   padding: 12px 16px;
   font-size: 16px;
@@ -161,37 +167,42 @@ html, body {
   border: 2px solid #ffaedd;
   border-radius: 10px;
   outline:none;
-  background-color: rgb(255, 148, 184);
+  background-color: rgb(253, 185, 208);
   transition: 0.25s;
 }
 #pass:hover{
-  background-color: pink;
+  color:white;
+  background-color: rgb(255, 157, 173);
 }
 #pass:focus{
-  border-color: hotpink;
+  color:white;
+  border-color: hsl(330, 94%, 81%);
   box-shadow: 0 0 10px rgba(255,105,180,.4);
-  background-color: pink;
+  background-color: rgb(250, 173, 186);
 }
 #butt{
+  color: white;
   margin-left: 115px;
   margin-top: 20px;
   margin-bottom: 10px;
   border: none;
   border-radius: 10px;
   padding: 10px 10px;
-  background-color: rgb(255, 148, 184);
+  background-color: rgb(255, 169, 198);
   font-family: 'Open Sans';
+  transition: 0.25s;
 }
 #butt:hover{
-  background-color: pink;
+  background-color: rgb(253, 141, 160);
   cursor: pointer;
 }
 #ttle{
+  color:white;
   margin-top:30px;
   margin-bottom: 30px;
-  margin-left: 65px;
+  margin-left: 80px;
   font-size: 20px;
-  font-family: 'Open Sans';
+  font-family: 'Sour Gummy';
 }
 #back{
   margin-left:12px;
@@ -207,101 +218,129 @@ html, body {
   transform: scale(0.3);
 }
 
-
-.top{
-  opacity: 0;
-  height: 75px;
-  width: 310px;
-  background-color: hsl(0, 46%, 50%);
-  border-top-left-radius: 40px;
-  border-top-right-radius: 40px;
-  transform: translateX(-5px) translateY(-40px);
-  grid-row: 1;
-  transition: 0.2s ease;
-  transform-origin: top;
-  z-index: 21;
+.pic{
+  height:100px;
+  z-index: 10;
+  display: none;
+  transition: 0.3s;
 }
-.sick{
+
+@keyframes flowerReveal{
+  0%{
+    opacity:0;
+    transform: scale(var(--s)) rotate(var(--r));
+  }
+  100%{
+    opacity:1;
+    transform: scale(var(--s)) rotate(calc(var(--r) + 90deg));
+  }
+}
+
+.flower-show{
+  animation: flowerReveal 1s ease forwards;
+}
+
+@keyframes leafLeft{
+  0%{
+    opacity:0;
+    transform: translateX(-120px) scale(var(--s)) rotate(var(--r));
+  }
+  100%{
+    opacity:1;
+    transform: translateX(0) scale(var(--s)) rotate(var(--r));
+  }
+}
+
+@keyframes leafRight{
+  0%{
+    opacity:0;
+    transform: translateX(120px) scale(var(--s)) rotate(var(--r));
+  }
+  100%{
+    opacity:1;
+    transform: translateX(0) scale(var(--s)) rotate(var(--r));
+  }
+}
+
+.leaf-left{
+  animation: leafLeft 1s ease forwards;
+}
+
+.leaf-right{
+  animation: leafRight 1s ease forwards;
+}
+
+#blur{
+  position: fixed;
+  inset:0;
+  z-index: 2;
+  backdrop-filter: blur(0px);
+  background: rgba(255,255,255,0.05);
+}
+
+.material-icons{
+  transform: scale(2);
+  color: white;
   opacity: 0;
-  height: 25px;
-  width: 320px;
-  transform: translateX(-10px) translateY(-40px);
-  background-color: hsl(49, 90%, 49%);
-  grid-row: 2;
+}
+
+#secret{
+  transform-origin: right;
+  transform: translate(130px, 50px);
+  animation: clickme 2s ease infinite;
+}
+
+@keyframes clickme {
+  0% {transform: scale(1) translate(130px, 50px)}
+  15% {transform: scale(0.8) translate(130px, 50px)}
+  25% {transform: scale(1.05) translate(130px, 50px)}
+  50% {transform: scale(0.8) translate(130px, 50px)}
+  75% {transform: scale(1.05) translate(130px, 50px)}
+  100% {transform: scale(1) translate(130px, 50px)}
+}
+
+#finale{
+  position: fixed;
+  inset: 0;
+  margin-top:20vh;
+  margin:auto;
+  z-index: 1;
+  background-color: white;
   border-radius: 10px;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  transform-origin: left;
-  z-index: 23;
-}
-.buttt{
+  height: 350px;
+  width: 250px;
+
   opacity: 0;
-  height: 150px;
-  width: 310px;
-  transform: translateX(-5px) translateY(-40px);
-  background-color: hsl(0, 57%, 35%);
-  border-bottom-left-radius: 40px;
-  border-bottom-right-radius: 40px;
-  grid-row: 3;
-  transform-origin: bottom;
-  z-index: 22;
+  transform: scale(0.8);
+  transition: opacity 0.4s ease, transform 0.4s ease;
 }
-.dot{
-  opacity: 0;
+
+#finale::before,
+#finale::after{
+  content: "";
   position: absolute;
-  height: 100px;
-  width: 100px;
-  grid-column: 1;
-  grid-row: 2;
-  transform: translate(100px, -240px);
-  z-index: 24;
+  width: 80px;
+  height: 80px;
+  background-image: url("img/rose.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  top:-20px;
+  left:-40px;
 }
-.dot img {
-  width: 100%;
-  height: 100%;
-  display: block;
-  transform: translateY(-10px);
-}
-.top,
-.sick,
-.buttt,
-.dot{
-  pointer-events: none;
+#finale::before{
+  top:300px;
+  left: 200px;
 }
 
-
-
-.one{
+#finale.show{
   opacity: 1;
-  animation: poptop 0.5s ease;
-}
-.two{
-  opacity: 1;
-  animation: stretchin 0.5s ease;
-}
-.three{
-  opacity: 1;
-  animation: poptop 0.5s ease;
-}
-.four{
-  opacity: 1;
-  animation: fah 0.5s ease;
+  transform: scale(1);
 }
 
-@keyframes poptop{
-  0% {transform: scale(0) translateX(-5px) translateY(-40px);}
-  75% {transform: scale(1.02) translateX(-5px) translateY(-40px);}
-  100% {transform: scale(1) translateX(-5px) translateY(-40px);}
+#yeu{
+  margin-top:120px;
+  margin-left:50px;
+  margin-right: 50px;
+  font-family: 'Open Sans';
+  color: rgb(252, 67, 98);
 }
-@keyframes stretchin{
-  0% {transform: scale(0) translateX(-10px) translateY(-40px);}
-  75% {transform: scale(1.03) translateX(-10px) translateY(-40px);}
-  100% {transform: scale(1) translateX(-10px) translateY(-40px);}
-}
-@keyframes fah{
-  0% {transform: scale(0) translate(100px, -240px);}
-  35% {transform: scale(0) translate(100px, -240px);}
-  80% {transform: scale(1.03) translate(100px, -240px);}
-  100% {transform: scale(1) translate(100px, -240px);}
-}
-
